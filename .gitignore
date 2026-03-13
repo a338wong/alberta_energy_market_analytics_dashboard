@@ -1,0 +1,42 @@
+# -----------------------------
+# Python
+# -----------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# -----------------------------
+# Virtual environments
+# -----------------------------
+.env
+.venv
+venv/
+env/
+
+# -----------------------------
+# Mac files
+# -----------------------------
+.DS_Store
+
+# -----------------------------
+# Data files (generated outputs)
+# -----------------------------
+data/raw/*.csv
+data/processed/*.csv
+data/processed/*.db
+
+# Keep folders but ignore contents
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# -----------------------------
+# Jupyter
+# -----------------------------
+.ipynb_checkpoints/
+
+# -----------------------------
+# Logs
+# -----------------------------
+*.log
