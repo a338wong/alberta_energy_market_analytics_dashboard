@@ -23,7 +23,6 @@ env/
 # -----------------------------
 # Data files (generated outputs)
 # -----------------------------
-data/raw/*.csv
 data/processed/*.csv
 data/processed/*.db
 
