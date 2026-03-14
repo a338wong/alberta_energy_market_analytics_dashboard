@@ -36,8 +36,11 @@ jobs:
           python scripts/clean_pool_price.py
           python scripts/build_market_dataset.py
 
-      - name: Upload output artifact
+      - name: Upload output artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: market-data-export
-          path: data/processed/market_data_export.csv
+          name: market-data-files
+          path: |
+            data/raw/weather_data.csv
+            data/processed/market_dataset.csv
+            data/processed/market_data_export.csv
