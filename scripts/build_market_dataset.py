@@ -1,62 +1,120 @@
 import pandas as pd
 from pathlib import Path
 
-# --------------------------------------------------
-# File paths
-# --------------------------------------------------
+# ============================================================
+# PROJECT: Alberta Energy Market Analytics Dashboard
+# PURPOSE:
+# Build the final analytics dataset by combining:
+# - AESO pool price data (hourly)
+# - Natural gas prices (daily)
+# - Weather data (hourly)
+#
+# OUTPUT:
+# market_dataset.csv → processed dataset
+# market_data_export.csv → fixed file for Power BI refresh
+# ============================================================
+
+
+# ============================================================
+# DEFINE PROJECT FILE PATHS
+# ============================================================
+# Resolve the directory where this script is located
 BASE_DIR = Path(__file__).resolve().parent
 
+# Define locations of input datasets
 POOL_PATH = BASE_DIR.parent / "data" / "processed" / "pool_price.csv"
 GAS_PATH = BASE_DIR.parent / "data" / "raw" / "gas_price.csv"
 WEATHER_PATH = BASE_DIR.parent / "data" / "raw" / "weather_data.csv"
 
+# Define output file locations
 OUTPUT_PATH = BASE_DIR.parent / "data" / "processed" / "market_dataset.csv"
 EXPORT_PATH = BASE_DIR.parent / "data" / "processed" / "market_data_export.csv"
 
-# Make sure output folder exists
+# Ensure output folder exists
 OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
-# --------------------------------------------------
-# Check required input files
-# --------------------------------------------------
+
+# ============================================================
+# VERIFY REQUIRED INPUT FILES EXIST
+# ============================================================
+# If any required dataset is missing, stop execution early.
 required_files = [POOL_PATH, GAS_PATH, WEATHER_PATH]
 missing_files = [str(path) for path in required_files if not path.exists()]
 
 if missing_files:
     raise FileNotFoundError(f"Missing required input files: {missing_files}")
 
-# --------------------------------------------------
-# Load datasets
-# --------------------------------------------------
+
+# ============================================================
+# LOAD DATASETS
+# ============================================================
+# Read CSV files into pandas DataFrames
 pool = pd.read_csv(POOL_PATH)
 gas = pd.read_csv(GAS_PATH)
 weather = pd.read_csv(WEATHER_PATH)
 
-# --------------------------------------------------
-# Convert datetime columns
-# --------------------------------------------------
-pool["datetime_he"] = pd.to_datetime(pool["datetime_he"], errors="coerce")
-gas["date"] = pd.to_datetime(gas["date"], errors="coerce")
-weather["datetime_he"] = pd.to_datetime(weather["datetime_he"], errors="coerce")
 
-# Drop bad rows before merging
+# ============================================================
+# STANDARDIZE DATETIME COLUMNS
+# ============================================================
+# Convert string timestamps into pandas datetime objects
+# "errors='coerce'" converts invalid timestamps into NaT
+# which we remove in the next step.
+
+pool["datetime_he"] = pd.to_datetime(pool["datetime_he"], errors="coerce").dt.floor("h")
+gas["date"] = pd.to_datetime(gas["date"], errors="coerce")
+weather["datetime_he"] = pd.to_datetime(weather["datetime_he"], errors="coerce").dt.floor("h")
+
+
+# ============================================================
+# REMOVE INVALID TIMESTAMPS
+# ============================================================
+# Drop rows where datetime conversion failed
 pool = pool.dropna(subset=["datetime_he"])
 gas = gas.dropna(subset=["date"])
 weather = weather.dropna(subset=["datetime_he"])
 
-# Create daily date column in pool data
+
+# ============================================================
+# OPTIONAL: ADJUST WEATHER TIMESTAMP (IF NEEDED)
+# ============================================================
+# Some electricity datasets use "Hour Ending" timestamps
+# while weather APIs use "Hour Beginning".
+#
+# If your pool price data represents Hour Ending values,
+# you may need to shift weather data forward by one hour.
+#
+# Uncomment this line if timestamps appear misaligned:
+#
+# weather["datetime_he"] = weather["datetime_he"] + pd.Timedelta(hours=1)
+
+
+# ============================================================
+# CREATE DAILY DATE COLUMN FOR GAS MERGE
+# ============================================================
+# Pool price data is hourly while gas price data is daily.
+# We create a daily column so each hourly observation
+# can inherit the latest available gas price.
+
 pool["date"] = pool["datetime_he"].dt.floor("D")
 
-# Sort before merge_asof
+
+# ============================================================
+# SORT DATASETS BEFORE MERGING
+# ============================================================
+# merge_asof requires sorted inputs
 pool = pool.sort_values("date").reset_index(drop=True)
 gas = gas.sort_values("date").reset_index(drop=True)
 
-# --------------------------------------------------
-# Merge using nearest previous gas date
-# --------------------------------------------------
-# Gas data is daily and pool data is hourly.
-# merge_asof with direction="backward" uses the latest
-# available prior gas price for each hourly pool price row.
+
+# ============================================================
+# MERGE GAS PRICES INTO HOURLY POOL DATA
+# ============================================================
+# Gas price is daily while pool price is hourly.
+#
+# merge_asof with direction="backward" assigns the most
+# recent gas price available for each hourly observation.
+
 df = pd.merge_asof(
     pool,
     gas,
@@ -64,31 +122,63 @@ df = pd.merge_asof(
     direction="backward"
 )
 
-# --------------------------------------------------
-# Merge weather 
-# --------------------------------------------------
-weather = weather.sort_values("datetime_he").reset_index(drop=True)
-df = df.sort_values("datetime_he").reset_index(drop=True)
 
-df = pd.merge_asof(
-    df,
+# ============================================================
+# DEBUG: CHECK DATETIME RANGES BEFORE WEATHER MERGE
+# ============================================================
+# This helps diagnose merge problems if weather columns
+# appear as NaN in the final dataset.
+
+print("\nPOOL datetime range:")
+print(df["datetime_he"].min(), "to", df["datetime_he"].max())
+
+print("\nWEATHER datetime range:")
+print(weather["datetime_he"].min(), "to", weather["datetime_he"].max())
+
+
+# ============================================================
+# MERGE WEATHER DATA
+# ============================================================
+# Weather data is hourly, so we perform a direct join
+# on the hourly timestamp.
+
+df = df.sort_values("datetime_he").reset_index(drop=True)
+weather = weather.sort_values("datetime_he").reset_index(drop=True)
+
+df = df.merge(
     weather,
     on="datetime_he",
-    direction="nearest",
-    tolerance=pd.Timedelta("1H")
+    how="left"
 )
 
-# --------------------------------------------------
-# Spark Spread Calculation
-# --------------------------------------------------
-# Spark Spread = Power Price – (Gas Price * Heat Rate)
+
+# ============================================================
+# DEBUG: CHECK FOR MISSING WEATHER VALUES
+# ============================================================
+print("\nNull counts after weather merge:")
+print(df[["temperature_c", "wind_speed_mps"]].isna().sum())
+
+
+# ============================================================
+# CALCULATE SPARK SPREAD
+# ============================================================
+# Spark Spread estimates profitability of gas-fired power plants.
+#
+# Formula:
+# Spark Spread = Power Price – (Gas Price × Heat Rate)
+#
+# Heat Rate represents the amount of gas required to generate
+# one MWh of electricity. Typical Alberta combined-cycle
+# heat rate ≈ 7–8 mmBtu/MWh.
+
 HEAT_RATE = 7.5
 
 df["spark_spread"] = df["pool_price"] - (df["gas_price"] * HEAT_RATE)
 
-# --------------------------------------------------
-# Final column selection
-# --------------------------------------------------
+
+# ============================================================
+# SELECT FINAL COLUMNS FOR DASHBOARD
+# ============================================================
 df = df[
     [
         "datetime_he",
@@ -101,21 +191,28 @@ df = df[
     ]
 ]
 
-# Sort by hourly timestamp
+
+# ============================================================
+# SORT DATASET
+# ============================================================
+# Ensure dataset is ordered chronologically
 df = df.sort_values("datetime_he").reset_index(drop=True)
 
-# --------------------------------------------------
-# Save outputs
-# --------------------------------------------------
-# market_dataset.csv = general processed dataset
-# market_data_export.csv = fixed file for Power BI / OneDrive sync
+
+# ============================================================
+# SAVE OUTPUT DATASETS
+# ============================================================
+# market_dataset.csv → general processed dataset
+# market_data_export.csv → fixed filename for Power BI refresh
+
 df.to_csv(OUTPUT_PATH, index=False)
 df.to_csv(EXPORT_PATH, index=False)
 
-# --------------------------------------------------
-# Print summary
-# --------------------------------------------------
-print("Market dataset created.")
+
+# ============================================================
+# PRINT SUMMARY
+# ============================================================
+print("\nMarket dataset created.")
 print("Saved to:", OUTPUT_PATH)
 print("Exported dataset for Power BI:", EXPORT_PATH)
 
