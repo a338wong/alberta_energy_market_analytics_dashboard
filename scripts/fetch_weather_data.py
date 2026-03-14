@@ -14,7 +14,7 @@ LONGITUDE = -114.07
 URL = "https://archive-api.open-meteo.com/v1/archive"
 
 # Historical API should only use past dates
-start_date = "2025-01-01"
+start_date = (datetime.now() - timedelta(days=365)).strftime("%Y-%m-%d")
 end_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
 
 params = {
