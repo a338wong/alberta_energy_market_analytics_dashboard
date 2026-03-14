@@ -65,12 +65,17 @@ df = pd.merge_asof(
 )
 
 # --------------------------------------------------
-# Merge weather on exact hourly timestamp
+# Merge weather 
 # --------------------------------------------------
-df = df.merge(
+weather = weather.sort_values("datetime_he").reset_index(drop=True)
+df = df.sort_values("datetime_he").reset_index(drop=True)
+
+df = pd.merge_asof(
+    df,
     weather,
     on="datetime_he",
-    how="left"
+    direction="nearest",
+    tolerance=pd.Timedelta("1H")
 )
 
 # --------------------------------------------------
