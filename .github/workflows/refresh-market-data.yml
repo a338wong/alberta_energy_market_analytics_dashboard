@@ -13,9 +13,14 @@ jobs:
   build-data:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -35,6 +40,16 @@ jobs:
           python scripts/fetch_weather_data.py
           python scripts/clean_pool_price.py
           python scripts/build_market_dataset.py
+
+      - name: Commit updated dataset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/processed/market_data_export.csv
+          git add data/processed/market_dataset.csv
+          git add data/raw/weather_data.csv
+          git diff --cached --quiet || git commit -m "Auto-update market data"
+          git push
 
       - name: Upload output artifacts
         uses: actions/upload-artifact@v4
