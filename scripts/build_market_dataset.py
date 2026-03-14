@@ -1,5 +1,10 @@
 import pandas as pd
+import hashlib
 from pathlib import Path
+
+def file_hash(path):
+    with open(path, "rb") as f:
+        return hashlib.md5(f.read()).hexdigest()
 
 # ============================================================
 # PROJECT: Alberta Energy Market Analytics Dashboard
@@ -219,25 +224,42 @@ df = df.sort_values("datetime_he").reset_index(drop=True)
 # market_dataset.csv → general processed dataset
 # market_data_export.csv → fixed filename for Power BI refresh
 
+df["demand_24h_avg"] = df["demand_24h_avg"].round(2)
+df["hdd"] = df["hdd"].round(1)
+df["spark_spread"] = df["spark_spread"].round(3)
+
 df.to_csv(OUTPUT_PATH, index=False)
 df.to_csv(EXPORT_PATH, index=False)
 
+print("\nExport file hash:")
+print(file_hash(EXPORT_PATH))
 
 # ============================================================
-# PRINT SUMMARY
+# DEBUG OUTPUT
 # ============================================================
-print("\nMarket dataset created.")
+print("\n--- FINAL DATASET DEBUG ---")
+
+print("Market dataset created.")
 print("Saved to:", OUTPUT_PATH)
 print("Exported dataset for Power BI:", EXPORT_PATH)
 
-print("\nFirst 5 rows:")
-print(df.head())
-
-print("\nLast 5 rows:")
-print(df.tail())
-
-print("\nData types:")
-print(df.dtypes)
-
-print("\nRow count:")
+print("\nRows in final dataset:")
 print(len(df))
+
+if not df.empty:
+    print("\nEarliest export datetime:")
+    print(df["datetime_he"].min())
+
+    print("\nLatest export datetime:")
+    print(df["datetime_he"].max())
+
+    print("\nLast 3 export rows:")
+    print(df.tail(3))
+
+    print("\nNull counts in final dataset:")
+    print(df.isna().sum())
+
+    print("\nData types:")
+    print(df.dtypes)
+else:
+    print("Final dataset is empty!")
