@@ -175,6 +175,18 @@ HEAT_RATE = 7.5
 
 df["spark_spread"] = df["pool_price"] - (df["gas_price"] * HEAT_RATE)
 
+# --------------------------------------------------
+# Feature engineering
+# --------------------------------------------------
+# Heating Degree Days (HDD)
+# Proxy for cold-weather power demand pressure.
+# Base temperature = 18°C
+df["hdd"] = (18 - df["temperature_c"]).clip(lower=0)
+
+# 24-hour rolling average demand
+# Smooths hourly noise and shows short-term demand trend
+df["demand_24h_avg"] = df["demand_mw"].rolling(window=24, min_periods=1).mean()
+
 
 # ============================================================
 # SELECT FINAL COLUMNS FOR DASHBOARD
@@ -184,9 +196,11 @@ df = df[
         "datetime_he",
         "pool_price",
         "demand_mw",
+        "demand_24h_avg",
         "gas_price",
         "temperature_c",
         "wind_speed_mps",
+        "hdd",
         "spark_spread",
     ]
 ]
