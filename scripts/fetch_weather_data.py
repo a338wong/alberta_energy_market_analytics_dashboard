@@ -10,11 +10,13 @@ from pathlib import Path
 LATITUDE = 51.05
 LONGITUDE = -114.07
 
-URL = "https://api.open-meteo.com/v1/forecast"
+URL = "https://archive-api.open-meteo.com/v1/archive"
 
 params = {
     "latitude": LATITUDE,
     "longitude": LONGITUDE,
+    "start_date": "2025-01-01",
+    "end_date": "2026-03-20",
     "hourly": "temperature_2m,wind_speed_10m",
     "timezone": "America/Edmonton"
 }
