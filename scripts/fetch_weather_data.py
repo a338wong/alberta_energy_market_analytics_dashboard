@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 from pathlib import Path
+from datetime import datetime, timedelta
 
 # ============================================================
 # PROJECT: Alberta Energy Market Analytics Dashboard
@@ -10,14 +11,17 @@ from pathlib import Path
 LATITUDE = 51.05
 LONGITUDE = -114.07
 
-# Historical archive endpoint
 URL = "https://archive-api.open-meteo.com/v1/archive"
+
+# Historical API should only use past dates
+start_date = "2025-01-01"
+end_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
 
 params = {
     "latitude": LATITUDE,
     "longitude": LONGITUDE,
-    "start_date": "2025-01-01",
-    "end_date": "2026-03-20",
+    "start_date": start_date,
+    "end_date": end_date,
     "hourly": "temperature_2m,wind_speed_10m",
     "timezone": "America/Edmonton"
 }
@@ -48,6 +52,7 @@ df.to_csv(OUTPUT_PATH, index=False)
 
 print("Weather data downloaded successfully.")
 print(f"Saved to: {OUTPUT_PATH}")
+print(f"Date range requested: {start_date} to {end_date}")
 print("\nFirst 5 rows:")
 print(df.head())
 print("\nLast 5 rows:")
