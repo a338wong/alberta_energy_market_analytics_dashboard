@@ -66,16 +66,27 @@ df = df.sort_values("datetime_he").reset_index(drop=True)
 df.to_csv(OUTPUT_PATH, index=False)
 
 # --------------------------------------------------
-# Preview
+# Debug output
 # --------------------------------------------------
-print("\nSaved cleaned pool price data to:")
+print("\n--- POOL PRICE DEBUG ---")
+
+print("Saved cleaned pool price data to:")
 print(OUTPUT_PATH)
 
-print("\nFirst 5 rows:")
-print(df.head())
-
-print("\nData types:")
-print(df.dtypes)
-
-print("\nRow count:")
+print("\nRows after cleaning:")
 print(len(df))
+
+if not df.empty:
+    print("\nEarliest pool datetime:")
+    print(df["datetime_he"].min())
+
+    print("\nLatest pool datetime:")
+    print(df["datetime_he"].max())
+
+    print("\nLast 3 pool rows:")
+    print(df.tail(3))
+
+    print("\nData types:")
+    print(df.dtypes)
+else:
+    print("Pool price dataframe is empty!")
