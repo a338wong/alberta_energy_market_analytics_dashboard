@@ -3,7 +3,7 @@ name: Refresh market data
 on:
   workflow_dispatch:
   schedule:
-    - cron: "17 * * * *"
+    - cron: "25 * * * *"
 
 concurrency:
   group: refresh-market-data
