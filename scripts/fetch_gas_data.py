@@ -102,15 +102,27 @@ df.to_csv(OUTPUT_PATH, index=False)
 
 
 # ============================================================
-# PRINT RESULTS FOR A QUICK CHECK
+# DEBUG OUTPUT
 # ============================================================
+print("\n--- GAS PRICE DEBUG ---")
+
 print("Gas price data downloaded successfully.")
 print(f"Saved to: {OUTPUT_PATH}")
-print("\nFirst 5 rows:")
-print(df.head())
 
-print("\nData types:")
-print(df.dtypes)
-
-print("\nRow count:")
+print("\nRows fetched:")
 print(len(df))
+
+if not df.empty:
+    print("\nEarliest gas date:")
+    print(df["date"].min())
+
+    print("\nLatest gas date:")
+    print(df["date"].max())
+
+    print("\nLast 3 gas rows:")
+    print(df.tail(3))
+
+    print("\nData types:")
+    print(df.dtypes)
+else:
+    print("Gas price dataframe is empty!")
