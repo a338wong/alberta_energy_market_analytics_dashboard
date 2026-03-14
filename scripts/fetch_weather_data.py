@@ -50,12 +50,23 @@ OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 df.to_csv(OUTPUT_PATH, index=False)
 
+print("\n--- WEATHER DEBUG ---")
+
 print("Weather data downloaded successfully.")
 print(f"Saved to: {OUTPUT_PATH}")
 print(f"Date range requested: {start_date} to {end_date}")
-print("\nFirst 5 rows:")
-print(df.head())
-print("\nLast 5 rows:")
-print(df.tail())
-print("\nRow count:")
+
+print("\nRows fetched:")
 print(len(df))
+
+if not df.empty:
+    print("\nEarliest weather timestamp:")
+    print(df["datetime_he"].min())
+
+    print("\nLatest weather timestamp:")
+    print(df["datetime_he"].max())
+
+    print("\nLast 3 weather rows:")
+    print(df.tail(3))
+else:
+    print("Weather dataframe is empty!")
