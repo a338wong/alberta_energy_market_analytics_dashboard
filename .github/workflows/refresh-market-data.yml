@@ -17,6 +17,12 @@ jobs:
       contents: write
 
     steps:
+      - name: Print trigger info
+        run: |
+          echo "event_name=${{ github.event_name }}"
+          echo "schedule=${{ github.event.schedule }}"
+          date -u
+          
       - name: Check out repo
         uses: actions/checkout@v4
         with:
