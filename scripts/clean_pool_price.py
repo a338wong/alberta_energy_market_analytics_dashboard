@@ -5,110 +5,106 @@ from pathlib import Path
 # File paths
 # --------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent
-INPUT_PATH = BASE_DIR.parent / "data" / "raw" / "pool_price_raw.csv"
+HISTORICAL_INPUT_PATH = BASE_DIR.parent / "data" / "raw" / "pool_price_raw.csv"
+CURRENT_INPUT_PATH = BASE_DIR.parent / "data" / "raw" / "pool_price_current_raw.csv"
 OUTPUT_PATH = BASE_DIR.parent / "data" / "processed" / "pool_price.csv"
 
-# Make sure the output folder exists
 OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 # --------------------------------------------------
-# Load raw AESO file
+# Helper to parse AESO pool CSV
 # --------------------------------------------------
-# Your file has extra rows above the real header:
-# Row 1: "Pool Price"
-# Row 2: blank
-# Row 3: actual header row
-df = pd.read_csv(INPUT_PATH, skiprows=4)
+def load_pool_csv(path: Path, label: str) -> pd.DataFrame:
+    if not path.exists():
+        raise FileNotFoundError(f"{label} file not found: {path}")
 
-print("Original columns:")
-print(df.columns)
+    df = pd.read_csv(path, skiprows=4)
 
-expected_cols = ["Date (HE)", "Price ($)", "AIL Demand (MW)"]
-missing_cols = [col for col in expected_cols if col not in df.columns]
+    print(f"\n--- {label.upper()} ORIGINAL COLUMNS ---")
+    print(df.columns)
 
-if missing_cols:
-    raise ValueError(f"Missing expected columns in AESO file: {missing_cols}")
+    expected_cols = ["Date (HE)", "Price ($)", "AIL Demand (MW)"]
+    missing_cols = [col for col in expected_cols if col not in df.columns]
+    if missing_cols:
+        raise ValueError(f"{label} missing expected columns: {missing_cols}")
 
-# --------------------------------------------------
-# Keep only the columns we need
-# --------------------------------------------------
-df = df[["Date (HE)", "Price ($)", "AIL Demand (MW)"]].copy()
+    df = df[["Date (HE)", "Price ($)", "AIL Demand (MW)"]].copy()
+    df.columns = ["datetime_he", "pool_price", "demand_mw"]
 
-# --------------------------------------------------
-# Rename columns to cleaner names
-# --------------------------------------------------
-df.columns = ["datetime_he", "pool_price", "demand_mw"]
+    df["datetime_he"] = pd.to_datetime(df["datetime_he"], errors="coerce")
+    df["pool_price"] = pd.to_numeric(df["pool_price"], errors="coerce")
+    df["demand_mw"] = pd.to_numeric(df["demand_mw"], errors="coerce")
 
-# --------------------------------------------------
-# Clean values
-# --------------------------------------------------
-# Convert Date (HE) into datetime
-df["datetime_he"] = pd.to_datetime(df["datetime_he"], errors="coerce")
+    print(f"\n--- {label.upper()} PRE-DROP DEBUG ---")
+    print("Rows before dropping nulls:")
+    print(len(df))
 
-# Convert numeric columns
-# The AESO file may contain "-" for unavailable values
-df["pool_price"] = pd.to_numeric(df["pool_price"], errors="coerce")
-df["demand_mw"] = pd.to_numeric(df["demand_mw"], errors="coerce")
+    print("\nLast 10 parsed rows before dropna:")
+    print(df.tail(10))
 
-print("\n--- PRE-DROP DEBUG ---")
-print("Rows before dropping nulls:")
-print(len(df))
+    df = df.dropna(subset=["datetime_he", "pool_price"])
+    df = df.sort_values("datetime_he").reset_index(drop=True)
 
-print("\nLast 10 parsed rows before dropna:")
-print(df.tail(10))
+    print(f"\n--- {label.upper()} POST-DROP DEBUG ---")
+    print("Rows after dropping nulls:")
+    print(len(df))
 
-print("\nNull counts before dropna:")
-print(df[["datetime_he", "pool_price", "demand_mw"]].isna().sum())
+    if not df.empty:
+        print("\nEarliest datetime:")
+        print(df["datetime_he"].min())
 
-today_date = pd.Timestamp.now().normalize()
-today_rows = df[df["datetime_he"].dt.normalize() == today_date]
+        print("\nLatest datetime:")
+        print(df["datetime_he"].max())
 
-print("\nRows for today before dropna:")
-print(len(today_rows))
+        print("\nLast 5 rows:")
+        print(df.tail(5))
+    else:
+        print(f"{label} dataframe is empty after cleaning.")
 
-if not today_rows.empty:
-    print("\nToday's parsed rows before dropna:")
-    print(today_rows.tail(10))
-else:
-    print("No rows for today found before dropna.")
+    return df
 
 # --------------------------------------------------
-# Remove bad rows
+# Load both historical and current layers
 # --------------------------------------------------
-df = df.dropna(subset=["datetime_he", "pool_price"])
+historical_df = load_pool_csv(HISTORICAL_INPUT_PATH, "historical")
+current_df = load_pool_csv(CURRENT_INPUT_PATH, "current")
 
 # --------------------------------------------------
-# Sort chronologically
+# Combine layers
 # --------------------------------------------------
-df = df.sort_values("datetime_he").reset_index(drop=True)
+combined = pd.concat([historical_df, current_df], ignore_index=True)
+
+# Keep latest copy when timestamps overlap
+combined = combined.sort_values("datetime_he").drop_duplicates(
+    subset=["datetime_he"], keep="last"
+).reset_index(drop=True)
 
 # --------------------------------------------------
 # Save cleaned file
 # --------------------------------------------------
-df.to_csv(OUTPUT_PATH, index=False)
+combined.to_csv(OUTPUT_PATH, index=False)
 
 # --------------------------------------------------
-# Debug output
+# Final debug output
 # --------------------------------------------------
-print("\n--- POOL PRICE DEBUG ---")
-
-print("Saved cleaned pool price data to:")
+print("\n--- FINAL POOL PRICE DEBUG ---")
+print("Saved cleaned combined pool price data to:")
 print(OUTPUT_PATH)
 
-print("\nRows after cleaning:")
-print(len(df))
+print("\nRows after combining:")
+print(len(combined))
 
-if not df.empty:
+if not combined.empty:
     print("\nEarliest pool datetime:")
-    print(df["datetime_he"].min())
+    print(combined["datetime_he"].min())
 
     print("\nLatest pool datetime:")
-    print(df["datetime_he"].max())
+    print(combined["datetime_he"].max())
 
-    print("\nLast 3 pool rows:")
-    print(df.tail(3))
+    print("\nLast 10 pool rows:")
+    print(combined.tail(10))
 
     print("\nData types:")
-    print(df.dtypes)
+    print(combined.dtypes)
 else:
-    print("Pool price dataframe is empty!")
+    print("Combined pool price dataframe is empty!")
