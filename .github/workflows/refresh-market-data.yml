@@ -45,6 +45,7 @@ jobs:
           python scripts/fetch_gas_data.py
           python scripts/fetch_weather_data.py
           python scripts/fetch_pool_price.py
+          python scripts/fetch_current_pool_price.py
           python scripts/clean_pool_price.py
           python scripts/build_market_dataset.py
 
@@ -53,6 +54,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -f data/raw/pool_price_raw.csv
+          git add -f data/raw/pool_price_current_raw.csv
           git add -f data/processed/market_data_export.csv
           git add -f data/processed/market_dataset.csv
           git add -f data/raw/weather_data.csv
