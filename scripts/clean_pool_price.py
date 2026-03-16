@@ -50,6 +50,28 @@ df["datetime_he"] = pd.to_datetime(df["datetime_he"], errors="coerce")
 df["pool_price"] = pd.to_numeric(df["pool_price"], errors="coerce")
 df["demand_mw"] = pd.to_numeric(df["demand_mw"], errors="coerce")
 
+print("\n--- PRE-DROP DEBUG ---")
+print("Rows before dropping nulls:")
+print(len(df))
+
+print("\nLast 10 parsed rows before dropna:")
+print(df.tail(10))
+
+print("\nNull counts before dropna:")
+print(df[["datetime_he", "pool_price", "demand_mw"]].isna().sum())
+
+today_date = pd.Timestamp.now().normalize()
+today_rows = df[df["datetime_he"].dt.normalize() == today_date]
+
+print("\nRows for today before dropna:")
+print(len(today_rows))
+
+if not today_rows.empty:
+    print("\nToday's parsed rows before dropna:")
+    print(today_rows.tail(10))
+else:
+    print("No rows for today found before dropna.")
+
 # --------------------------------------------------
 # Remove bad rows
 # --------------------------------------------------
