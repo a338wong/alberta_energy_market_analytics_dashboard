@@ -2,21 +2,15 @@
 
 An end-to-end data pipeline and visualization dashboard analyzing key drivers of Alberta’s electricity market, including power prices, demand, natural gas prices, and weather conditions.
 
----
-
 ## Dashboard Preview
 
 ![Dashboard Preview](assets/dashboard_preview.png)
-
----
 
 ## Download Dashboard
 
 [Download Power BI File (.pbix)](https://github.com/a338wong/alberta_energy_market_analytics_dashboard/raw/main/reports/Alberta_Energy_Dashboard.pbix)
 
 *Requires Power BI Desktop to open.*
-
----
 
 ## Project Overview
 
@@ -29,8 +23,6 @@ This project tracks and analyzes how electricity prices respond to changes in ke
 The system automates data collection, transformation, and reporting to simulate a real-world analytics workflow used in energy trading, market analysis, and risk management.
 
 The dashboard enables users to explore relationships between these variables to better understand energy price volatility and market conditions in Alberta.
-
----
 
 ## Key Questions the Dashboard Answers
 
@@ -51,8 +43,6 @@ The dashboard enables users to explore relationships between these variables to 
 - Analyze the correlation between gas and power prices  
 - Track gas price trends alongside electricity price movements  
 - Understand spark spread dynamics  
-
----
 
 ## Data Pipeline and Methodology
 
@@ -76,8 +66,6 @@ The dashboard enables users to explore relationships between these variables to 
 ### Visualization
 - Power BI dashboard with KPI cards and time-series analysis  
 
----
-
 ## Tech Stack
 
 - Python (Pandas, Requests)  
@@ -85,8 +73,6 @@ The dashboard enables users to explore relationships between these variables to 
 - Power BI (data visualization)  
 - APIs (AESO, FRED, Weather)  
 - CSV-based data pipeline  
-
----
 
 ## Limitations
 
@@ -99,8 +85,6 @@ Power BI Deployment Constraint:
 Due to restrictions associated with Power BI free-tier and school-managed accounts, the dashboard cannot be published publicly via Power BI Service.  
 To address this, the full `.pbix` file is provided above for local interaction and exploration.
 
----
-
 ## Future Improvements
 
 - Alternative data sources for natural gas to reduce reliance on FRED API  
@@ -108,8 +92,6 @@ To address this, the full `.pbix` file is provided above for local interaction a
 - Grid congestion and constraint analysis for price spike drivers  
 - Advanced analytics, including volatility modeling and correlation analysis  
 - Alerting system for significant market events  
-
----
 
 ## Credits
 
