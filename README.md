@@ -10,7 +10,8 @@ An end-to-end data pipeline and visualization dashboard analyzing key drivers of
 
 [Download Power BI File (.pbix)](https://github.com/a338wong/alberta_energy_market_analytics_dashboard/raw/main/reports/Alberta_Energy_Dashboard.pbix)
 
-*Requires Power BI Desktop to open.*
+*The dashboard is provided as a `.pbix` file for full functionality in Power BI Desktop (Windows only).  
+It can also be uploaded to Power BI Service (web) using a work or school account, though data refresh may require additional configuration.*
 
 ## Project Overview
 
@@ -82,8 +83,8 @@ The dashboard enables users to explore relationships between these variables to 
 - Dependence on external APIs for data availability  
 
 Power BI Deployment Constraint:  
-Due to restrictions associated with Power BI free-tier and school-managed accounts, the dashboard cannot be published publicly via Power BI Service.  
-To address this, the full `.pbix` file is provided above for local interaction and exploration.
+- Due to restrictions associated with Power BI free-tier and school-managed accounts, the dashboard cannot be published publicly via Power BI Service.  
+- To address this, the full `.pbix` file is provided above for local interaction and exploration.
 
 ## Future Improvements
 
