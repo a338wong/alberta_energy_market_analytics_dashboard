@@ -1,7 +1,5 @@
 # Alberta Energy Market Analytics Dashboard
 
-An end-to-end energy market analytics platform that models and visualizes key drivers of Alberta electricity prices, including demand, natural gas, and weather, to analyze price volatility and market dynamics.
-
 ## Dashboard Preview
 
 ![Dashboard Preview](assets/dashboard_preview.png)
@@ -15,15 +13,11 @@ It can also be uploaded to Power BI Service (web) using a work or school account
 
 ## Project Overview
 
-This project tracks and analyzes how electricity prices respond to changes in key market drivers:
+This project is an end-to-end energy market analytics platform that analyzes electricity price volatility in Alberta by integrating key market drivers, including electricity demand, natural gas prices, and weather conditions.
 
-- Electricity demand  
-- Natural gas prices  
-- Weather conditions  
+It tracks how electricity prices respond to changes in these variables through an automated data pipeline that handles data collection, transformation, and reporting, simulating a real-world analytics workflow used in energy trading, market analysis, and risk management.
 
-The system automates data collection, transformation, and reporting to simulate a real-world analytics workflow used in energy trading, market analysis, and risk management.
-
-The dashboard enables users to explore relationships between these variables to better understand energy price volatility and market conditions in Alberta.
+The dashboard enables users to explore relationships between these drivers, identify patterns in price volatility, and better understand underlying market dynamics.
 
 ## Key Questions the Dashboard Answers
 
@@ -53,16 +47,19 @@ The dashboard enables users to explore relationships between these variables to 
 - Weather API → Temperature and wind speed  
 
 ### Data Processing
-- Clean, align, and merge datasets into a unified time-series dataset  
+- Standardized timestamps across datasets (hourly alignment)
+- Handled missing values and data gaps
+- Joined datasets into a unified time-series table for analysis
 
 ### Feature Engineering
-- Spark spread calculation  
-- Time-based aggregations  
-- KPI metric construction  
+- Spark spread calculation (electricity price – natural gas cost proxy)
+- Time-based features (hour of day, weekday/weekend, seasonality)
+- Aggregated KPIs for demand, price, and volatility analysis 
 
 ### Automation
-- GitHub Actions schedules pipeline execution  
-- Processed dataset is updated automatically  
+- Scheduled data pipeline using GitHub Actions (hourly refresh)
+- Automated ingestion, transformation, and dataset rebuild
+- Ensures dashboard reflects near real-time market conditions
 
 ### Visualization
 - Power BI dashboard with KPI cards and time-series analysis  
@@ -80,22 +77,49 @@ The dashboard enables users to explore relationships between these variables to 
 
 ## Limitations
 
-- Natural gas data from FRED is not always updated daily  
-- GitHub Actions scheduling may introduce slight delays  
-- Differences in data granularity across sources  
-- Dependence on external APIs for data availability  
+### Data Availability and Timeliness
+- Natural gas price data sourced from FRED is subject to reporting lag and is not consistently updated on a daily basis, which may result in slight misalignment with real-time electricity market conditions  
+- Data freshness across sources varies, leading to potential discrepancies in the most recent observations  
 
-Power BI Deployment Constraint:  
-- Due to restrictions associated with Power BI free-tier and school-managed accounts, the dashboard cannot be published publicly via Power BI Service.  
-- To address this, the full `.pbix` file is provided above for local interaction and exploration.
+### Data Granularity and Alignment
+- Differences in data frequency (e.g., hourly electricity demand vs daily natural gas prices) require resampling and forward-filling, which may introduce approximation error  
+- Temporal alignment across datasets may smooth short-term fluctuations, particularly in gas price movements  
+
+### Pipeline and Automation Constraints
+- GitHub Actions operates on a scheduled basis (hourly), which may introduce delays between data availability and dashboard updates  
+- Pipeline reliability is dependent on successful workflow execution and external API responsiveness  
+
+### External Dependencies
+- The system relies on third-party APIs (AESO, FRED, Weather), which may experience downtime, rate limits, or structural changes that could impact data ingestion  
+
+### Power BI Deployment Constraints
+- Due to limitations of Power BI free-tier and school-managed accounts, the dashboard cannot be publicly hosted via Power BI Service  
+- As a result, users must download and open the `.pbix` file locally or upload it to Power BI Service using a compatible account  
+- Automated data refresh in the cloud environment may require additional configuration (e.g., gateway setup or premium workspace)
 
 ## Future Improvements
 
-- Alternative data sources for natural gas to reduce reliance on FRED API  
-- Forecasting models for electricity prices and demand  
-- Grid congestion and constraint analysis for price spike drivers  
-- Advanced analytics, including volatility modeling and correlation analysis  
-- Alerting system for significant market events  
+### Data Enhancements
+- Integrate higher-frequency and more timely natural gas data sources (e.g., intraday or market-based pricing) to improve alignment with electricity market movements  
+- Incorporate additional market variables such as load forecasts, generation mix, and intertie flows to better capture supply-demand dynamics  
+
+### Advanced Analytics and Modeling
+- Develop forecasting models for electricity prices and demand (e.g., regression-based or machine learning approaches) to support forward-looking analysis  
+- Implement volatility modeling and rolling correlation analysis to better quantify price risk and relationships between market drivers  
+- Introduce lag analysis to identify delayed effects of gas prices and weather on electricity prices  
+
+### Market Structure Analysis
+- Incorporate grid congestion and transmission constraint data to analyze structural drivers of price spikes  
+- Analyze supply-side factors such as generation outages and capacity constraints  
+
+### System and Pipeline Improvements
+- Enhance pipeline robustness with monitoring, logging, and failure handling for more reliable data ingestion  
+- Reduce data latency by increasing refresh frequency or integrating streaming data sources  
+
+### User Experience and Decision Support
+- Build alerting mechanisms for significant market events (e.g., price spikes, demand surges)  
+- Add scenario analysis and interactive filters to simulate market conditions  
+- Expand dashboard interactivity with drill-down capabilities and dynamic comparisons  
 
 ## Credits
 
