@@ -1,17 +1,17 @@
 # Alberta Energy Market Analytics Dashboard
 
-## Dashboard Preview
+## Dashboard Preview 🖥️
 
 ![Dashboard Preview](assets/dashboard_preview.png)
 
-## Download Dashboard
+## Download Dashboard ⬇️
 
 [Power BI File (.pbix)](https://github.com/a338wong/alberta_energy_market_analytics_dashboard/raw/main/reports/alberta_energy_market_dashboard.pbix)
 
 *The dashboard is provided as a `.pbix` file for full functionality in Power BI Desktop (Windows only).  
 It can also be uploaded to Power BI Service (web) using a work or school account, though data refresh may require additional configuration.*
 
-## Project Overview
+## Project Overview 📊
 
 This project is an end-to-end energy market analytics platform that analyzes electricity price volatility in Alberta by integrating key market drivers, including electricity demand, natural gas prices, and weather conditions.
 
@@ -19,7 +19,7 @@ It tracks how electricity prices respond to changes in these variables through a
 
 The dashboard enables users to explore relationships between these drivers, identify patterns in price volatility, and better understand underlying market dynamics.
 
-## Key Questions the Dashboard Answers
+## Key Questions the Dashboard Answers ❓
 
 ### What drives electricity price volatility in Alberta?
 - Analyze price spikes and volatility patterns  
@@ -39,7 +39,7 @@ The dashboard enables users to explore relationships between these drivers, iden
 - Track gas price trends alongside electricity price movements  
 - Understand spark spread dynamics  
 
-## Data Pipeline and Methodology
+## Data Pipeline and Methodology ⚙️
 
 ### Data Collection
 - AESO → Alberta pool price and demand  
@@ -64,7 +64,7 @@ The dashboard enables users to explore relationships between these drivers, iden
 ### Visualization
 - Power BI dashboard with KPI cards and time-series analysis  
 
-## Tech Stack
+## Tech Stack 🧰
 
 - Python (Pandas, Requests) for data ingestion and transformation
 - GitHub Actions for automated data pipeline scheduling (hourly refresh)
@@ -75,7 +75,7 @@ The dashboard enables users to explore relationships between these drivers, iden
   - Weather API (temperature, wind)
 - Time-series data modeling and feature engineering (spark spread, aggregations)
 
-## Limitations
+## Limitations ⚠️
 
 ### Data Availability and Timeliness
 - Natural gas price data sourced from FRED is subject to reporting lag and is not consistently updated on a daily basis, which may result in slight misalignment with real-time electricity market conditions  
@@ -97,7 +97,7 @@ The dashboard enables users to explore relationships between these drivers, iden
 - As a result, users must download and open the `.pbix` file locally or upload it to Power BI Service using a compatible account  
 - Automated data refresh in the cloud environment may require additional configuration (e.g., gateway setup or premium workspace)
 
-## Future Improvements
+## Future Improvements 🚀
 
 ### Data Enhancements
 - Integrate higher-frequency and more timely natural gas data sources (e.g., intraday or market-based pricing) to improve alignment with electricity market movements  
@@ -121,7 +121,7 @@ The dashboard enables users to explore relationships between these drivers, iden
 - Add scenario analysis and interactive filters to simulate market conditions  
 - Expand dashboard interactivity with drill-down capabilities and dynamic comparisons  
 
-## Credits
+## Credits 👤
 
 - Alan Wong  
   - GitHub: https://github.com/a338wong  
