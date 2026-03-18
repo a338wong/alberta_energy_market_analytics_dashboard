@@ -48,7 +48,8 @@ The dashboard enables users to explore relationships between these variables to 
 Interactive dashboard available upon request
 
 ## Dashboard Preview
-![Dashboard](assets/dashboard.png)
+<img width="1379" height="825" alt="image" src="https://github.com/user-attachments/assets/d1ae2dda-98ab-489f-9796-8fc027cf6f74" />
+
 
 ## Data Pipeline and Methodology
 
