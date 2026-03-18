@@ -1,6 +1,6 @@
 # Alberta Energy Market Analytics Dashboard
 
-An end-to-end data pipeline and visualization dashboard analyzing key drivers of Alberta’s electricity market, including power prices, demand, natural gas prices, and weather conditions.
+An end-to-end energy market analytics platform that models and visualizes key drivers of Alberta electricity prices, including demand, natural gas, and weather, to analyze price volatility and market dynamics.
 
 ## Dashboard Preview
 
