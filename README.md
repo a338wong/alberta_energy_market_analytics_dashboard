@@ -17,7 +17,6 @@ This project is an end-to-end energy market analytics dashboard that tracks and 
 
 The system automates data collection, transformation, and reporting to simulate a real-world analytics workflow used in energy trading, market analysis, and risk management.
 
----
 
 ## Project Objective 🎯
 
@@ -29,7 +28,7 @@ Build an interactive Power BI dashboard analyzing Alberta energy market dynamics
 
 The dashboard enables users to explore relationships between these variables to better understand **energy price volatility and market conditions in Alberta**.
 
----
+
 
 ## Key Questions the Dashboard Answers ❓
 
@@ -37,27 +36,20 @@ The dashboard enables users to explore relationships between these variables to 
 - Analyze price spikes and volatility patterns  
 - Examine price distributions over time  
 
----
-
 ### 2️⃣ When does electricity demand peak?
 - Identify hourly demand trends  
 - Compare weekday vs weekend demand  
 - Analyze seasonal demand patterns  
 
----
-
 ### 3️⃣ How does weather influence energy demand?
 - Compare temperature vs electricity demand  
 - Evaluate seasonal weather effects  
-
----
 
 ### 4️⃣ How are natural gas prices related to electricity prices?
 - Analyze correlation between gas and power prices  
 - Track gas price trends alongside electricity price movements  
 - Understand spark spread dynamics  
 
----
 
 ## Live Dashboard 🌐
 
@@ -68,7 +60,6 @@ The dashboard enables users to explore relationships between these variables to 
 ## Dashboard Preview 📊
 ![Dashboard](assets/dashboard.png)
 
----
 
 ## Data Pipeline & Methodology 📈
 
@@ -77,30 +68,21 @@ The dashboard enables users to explore relationships between these variables to 
 - FRED API → Natural gas prices  
 - Weather API → Temperature & wind speed  
 
----
-
 ### 2. Data Processing
 - Clean, align, and merge datasets into a unified time-series dataset  
-
----
 
 ### 3. Feature Engineering
 - Spark spread calculation  
 - Time-based aggregations  
 - KPI metric construction  
 
----
-
 ### 4. Automation
 - GitHub Actions schedules pipeline execution  
 - Processed dataset is updated automatically  
 
----
-
 ### 5. Visualization
 - Power BI dashboard with KPI cards and time-series analysis  
 
----
 
 ## Tech Stack 💻
 
@@ -110,7 +92,6 @@ The dashboard enables users to explore relationships between these variables to 
 - APIs (AESO, FRED, Weather)  
 - CSV-based data pipeline  
 
----
 
 ## Limitations ⚠️
 
@@ -120,7 +101,6 @@ The dashboard enables users to explore relationships between these variables to 
 - **Data granularity differences** across sources  
 - **Dependence on external APIs** for data availability  
 
----
 
 ## Future Improvements 🚀
 
@@ -130,12 +110,9 @@ The dashboard enables users to explore relationships between these variables to 
 - **Advanced analytics** (volatility modeling, correlation analysis)  
 - **Alerting system** for market events  
 
----
 
 ## Credits 🏆
 
 - **Alan Wong**  
   - GitHub: https://github.com/a338wong  
   - LinkedIn: https://www.linkedin.com/in/alan-wong-309160212/  
-
----
