@@ -23,8 +23,6 @@ The system automates data collection, transformation, and reporting to simulate 
 
 The dashboard enables users to explore relationships between these variables to better understand energy price volatility and market conditions in Alberta.
 
-The dashboard enables users to explore relationships between these variables to better understand energy price volatility and market conditions in Alberta.
-
 ## Key Questions the Dashboard Answers
 
 ### 1. What drives electricity price volatility in Alberta?
@@ -36,7 +34,7 @@ The dashboard enables users to explore relationships between these variables to 
 - Compare weekday vs weekend demand  
 - Analyze seasonal demand patterns  
 
-### 3. How does weather influence energy demand?
+### 3. How does the weather influence energy demand?
 - Compare temperature vs electricity demand  
 - Evaluate seasonal weather effects  
 
@@ -95,7 +93,7 @@ Interactive dashboard available upon request
 - Alternative data sources for natural gas to reduce reliance on FRED API  
 - Forecasting models for electricity prices and demand  
 - Grid congestion and constraint analysis for price spike drivers  
-- Advanced analytics including volatility modeling and correlation analysis  
+- Advanced analytics, including volatility modeling and correlation analysis  
 - Alerting system for significant market events  
 
 ## Credits
