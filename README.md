@@ -8,7 +8,7 @@ An end-to-end energy market analytics platform that models and visualizes key dr
 
 ## Download Dashboard
 
-[Download Power BI File (.pbix)](https://github.com/a338wong/alberta_energy_market_analytics_dashboard/raw/main/reports/alberta_energy_market_dashboard.pbix)
+[Power BI File (.pbix)](https://github.com/a338wong/alberta_energy_market_analytics_dashboard/raw/main/reports/alberta_energy_market_dashboard.pbix)
 
 *The dashboard is provided as a `.pbix` file for full functionality in Power BI Desktop (Windows only).  
 It can also be uploaded to Power BI Service (web) using a work or school account, though data refresh may require additional configuration.*
@@ -69,11 +69,14 @@ The dashboard enables users to explore relationships between these variables to 
 
 ## Tech Stack
 
-- Python (Pandas, Requests)  
-- GitHub Actions (CI/CD automation)  
-- Power BI (data visualization)  
-- APIs (AESO, FRED, Weather)  
-- CSV-based data pipeline  
+- Python (Pandas, Requests) for data ingestion and transformation
+- GitHub Actions for automated data pipeline scheduling (hourly refresh)
+- Power BI for interactive dashboard visualization
+- External APIs:
+  - AESO (electricity market data)
+  - FRED (natural gas prices)
+  - Weather API (temperature, wind)
+- Time-series data modeling and feature engineering (spark spread, aggregations)
 
 ## Limitations
 
