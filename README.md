@@ -5,29 +5,25 @@
 2. [Project Objective](#project-objective)
 3. [Key Questions the Dashboard Answers](#key-questions-the-dashboard-answers)
 4. [Live Dashboard](#live-dashboard)
-5. [Data Pipeline & Methodology](#data-pipeline--methodology)
-6. [Tech Stack](#tech-stack)
-7. [Limitations](#limitations)
-8. [Future Improvements](#future-improvements)
-9. [Credits](#credits)
+5. [Data Pipeline & Methodology](#data-pipeline--methodology-)
+6. [Tech Stack](#tech-stack-)
+7. [Limitations](#limitations-)
+8. [Future Improvements](#future-improvements-)
+9. [Credits](#credits-)
 
 ## Project Description 📋
 
 This project is an end-to-end energy market analytics dashboard that tracks and visualizes key drivers of Alberta’s electricity market, including power prices, demand, natural gas prices, and weather conditions.
-
 The system automates data collection, transformation, and reporting to simulate a real-world analytics workflow used in energy trading, market analysis, and risk management.
 
 
 ## Project Objective 🎯
 
 Build an interactive Power BI dashboard analyzing Alberta energy market dynamics, focusing on how electricity prices respond to changes in:
-
 - Electricity demand  
 - Natural gas prices  
 - Weather conditions  
-
 The dashboard enables users to explore relationships between these variables to better understand **energy price volatility and market conditions in Alberta**.
-
 
 
 ## Key Questions the Dashboard Answers ❓
@@ -46,7 +42,7 @@ The dashboard enables users to explore relationships between these variables to 
 - Evaluate seasonal weather effects  
 
 ### 4️⃣ How are natural gas prices related to electricity prices?
-- Analyze correlation between gas and power prices  
+- Analyze the correlation between gas and power prices  
 - Track gas price trends alongside electricity price movements  
 - Understand spark spread dynamics  
 
@@ -104,15 +100,15 @@ The dashboard enables users to explore relationships between these variables to 
 
 ## Future Improvements 🚀
 
-- **Alternative data sources for natural gas** to reduce reliance on FRED API  
-- **Forecasting models** for electricity prices and demand  
-- **Grid congestion & constraint analysis** for price spike drivers  
-- **Advanced analytics** (volatility modeling, correlation analysis)  
-- **Alerting system** for market events  
+- **Alternative data sources for natural gas** to reduce reliance on FRED API latency (e.g., more frequently updated market data providers)
+- **Forecasting models** for electricity prices and demand (e.g., time-series or machine learning approaches)
+- **Grid congestion & constraint analysis** to identify transmission bottlenecks and their impact on price spikes
+- **Advanced analytics** including volatility modeling, correlation analysis, and scenario testing
+- **Alerting system** for significant market events (e.g., price spikes, demand surges)
 
 
 ## Credits 🏆
 
 - **Alan Wong**  
   - GitHub: https://github.com/a338wong  
-  - LinkedIn: https://www.linkedin.com/in/alan-wong-309160212/  
+  - LinkedIn: https://www.linkedin.com/in/a338wong/
