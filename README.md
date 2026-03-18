@@ -11,15 +11,11 @@
 8. [Future Improvements](#future-improvements)
 9. [Credits](#credits)
 
----
-
 ## Project Description
 
 This project is an end-to-end energy market analytics dashboard that tracks and visualizes key drivers of Alberta’s electricity market, including power prices, demand, natural gas prices, and weather conditions.
 
 The system automates data collection, transformation, and reporting to simulate a real-world analytics workflow used in energy trading, market analysis, and risk management.
-
----
 
 ## Project Objective
 
@@ -30,8 +26,6 @@ Build an interactive Power BI dashboard analyzing Alberta energy market dynamics
 - Weather conditions  
 
 The dashboard enables users to explore relationships between these variables to better understand energy price volatility and market conditions in Alberta.
-
----
 
 ## Key Questions the Dashboard Answers
 
@@ -53,18 +47,12 @@ The dashboard enables users to explore relationships between these variables to 
 - Track gas price trends alongside electricity price movements  
 - Understand spark spread dynamics  
 
----
-
 ## Live Dashboard
 
 Interactive dashboard available upon request
 
----
-
 ## Dashboard Preview
 ![Dashboard](assets/dashboard.png)
-
----
 
 ## Data Pipeline and Methodology
 
@@ -88,8 +76,6 @@ Interactive dashboard available upon request
 ### 5. Visualization
 - Power BI dashboard with KPI cards and time-series analysis  
 
----
-
 ## Tech Stack
 
 - Python (Pandas, Requests)  
@@ -97,8 +83,6 @@ Interactive dashboard available upon request
 - Power BI (data visualization)  
 - APIs (AESO, FRED, Weather)  
 - CSV-based data pipeline  
-
----
 
 ## Limitations
 
@@ -108,8 +92,6 @@ Interactive dashboard available upon request
 - Data granularity differences across sources  
 - Dependence on external APIs for data availability  
 
----
-
 ## Future Improvements
 
 - Alternative data sources for natural gas to reduce reliance on FRED API  
@@ -118,12 +100,8 @@ Interactive dashboard available upon request
 - Advanced analytics including volatility modeling and correlation analysis  
 - Alerting system for significant market events  
 
----
-
 ## Credits
 
 - Alan Wong  
   - GitHub: https://github.com/a338wong  
   - LinkedIn: https://www.linkedin.com/in/a338wong/  
-
----
