@@ -1,29 +1,27 @@
 # Alberta Energy Market Analytics Dashboard
 
 ## Table of Contents
-1. [Project Description](#project-description)
-2. [Project Objective](#project-objective)
-3. [Key Questions the Dashboard Answers](#key-questions-the-dashboard-answers)
-4. [Live Dashboard](#live-dashboard)
-5. [Data Pipeline and Methodology](#data-pipeline-and-methodology)
-6. [Tech Stack](#tech-stack)
-7. [Limitations](#limitations)
-8. [Future Improvements](#future-improvements)
-9. [Credits](#credits)
+1. [Project Overview](#project-overview)
+2. [Key Questions the Dashboard Answers](#key-questions-the-dashboard-answers)
+3. [Live Dashboard](#live-dashboard)
+4. [Data Pipeline and Methodology](#data-pipeline-and-methodology)
+5. [Tech Stack](#tech-stack)
+6. [Limitations](#limitations)
+7. [Future Improvements](#future-improvements)
+8. [Credits](#credits)
 
-## Project Description
+## Project Overview
 
 This project is an end-to-end energy market analytics dashboard that tracks and visualizes key drivers of Alberta’s electricity market, including power prices, demand, natural gas prices, and weather conditions.
 
-The system automates data collection, transformation, and reporting to simulate a real-world analytics workflow used in energy trading, market analysis, and risk management.
-
-## Project Objective
-
-Build an interactive Power BI dashboard analyzing Alberta energy market dynamics, focusing on how electricity prices respond to changes in:
-
+The goal is to analyze how electricity prices respond to changes in:
 - Electricity demand  
 - Natural gas prices  
 - Weather conditions  
+
+The system automates data collection, transformation, and reporting to simulate a real-world analytics workflow used in energy trading, market analysis, and risk management.
+
+The dashboard enables users to explore relationships between these variables to better understand energy price volatility and market conditions in Alberta.
 
 The dashboard enables users to explore relationships between these variables to better understand energy price volatility and market conditions in Alberta.
 
