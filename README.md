@@ -1,5 +1,9 @@
 # Alberta Energy Market Analytics Dashboard
 
+End-to-end energy market analytics pipeline and Power BI dashboard analyzing Alberta electricity price volatility using demand, natural gas, and weather data.
+
+Automated hourly data pipeline with feature engineering (spark spread, demand trends) to support market analysis and energy trading insights.
+
 ## Dashboard Preview 🖥️
 
 ![Dashboard Preview](assets/dashboard_preview.png)
