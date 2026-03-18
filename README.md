@@ -5,15 +5,11 @@
 2. [Project Objective](#project-objective)
 3. [Key Questions the Dashboard Answers](#key-questions-the-dashboard-answers)
 4. [Live Dashboard](#live-dashboard)
-5. [How to Run the Project](#how-to-run-the-project)
-6. [How to Use the Project](#how-to-use-the-project)
-7. [Data Pipeline & Methodology](#data-pipeline--methodology)
-8. [Tech Stack](#tech-stack)
-9. [Limitations](#limitations)
-10. [Future Improvements](#future-improvements)
-11. [Credits](#credits)
-
----
+5. [Data Pipeline & Methodology](#data-pipeline--methodology)
+6. [Tech Stack](#tech-stack)
+7. [Limitations](#limitations)
+8. [Future Improvements](#future-improvements)
+9. [Credits](#credits)
 
 ## Project Description 📋
 
@@ -74,53 +70,6 @@ The dashboard enables users to explore relationships between these variables to 
 
 ---
 
-## How to Run the Project 🛠️
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/a338wong/alberta_energy_market_analytics_dashboard.git
-cd alberta_energy_market_analytics_dashboard
-```
-
-### 2. Install Dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Run Data Pipeline
-```bash
-python scripts/fetch_gas_data.py
-python scripts/fetch_weather_data.py
-python scripts/clean_pool_price.py
-python scripts/build_market_dataset.py
-```
-
-### 4. Open Dashboard
-- Open the Power BI `.pbix` file  
-- Refresh data to view updated metrics  
-
----
-
-## How to Use the Project 📖
-
-1. Monitor KPI cards for:
-   - Pool price ($/MWh)  
-   - Electricity demand (MW)  
-   - Natural gas prices  
-   - Spark spread  
-
-2. Analyze time-series charts to:
-   - Identify price trends and volatility  
-   - Compare demand vs price behavior  
-   - Observe weather impact on energy consumption  
-
-3. Use the dashboard to:
-   - Understand market dynamics  
-   - Evaluate cost drivers of electricity  
-   - Explore relationships between gas and power markets  
-
----
-
 ## Data Pipeline & Methodology 📈
 
 ### 1. Data Collection
@@ -131,10 +80,7 @@ python scripts/build_market_dataset.py
 ---
 
 ### 2. Data Processing
-- Clean and standardize raw datasets  
-- Align time-series data across sources  
-- Handle missing values and inconsistencies  
-- Merge into a unified dataset  
+- Clean, align, and merge datasets into a unified time-series dataset  
 
 ---
 
@@ -147,16 +93,12 @@ python scripts/build_market_dataset.py
 
 ### 4. Automation
 - GitHub Actions schedules pipeline execution  
-- Data is refreshed automatically  
-- Processed dataset is stored in the repository  
+- Processed dataset is updated automatically  
 
 ---
 
 ### 5. Visualization
-- Power BI dashboard includes:
-  - KPI cards  
-  - Time-series charts  
-  - Comparative analytics  
+- Power BI dashboard with KPI cards and time-series analysis  
 
 ---
 
@@ -172,21 +114,21 @@ python scripts/build_market_dataset.py
 
 ## Limitations ⚠️
 
-- **FRED API latency**: Natural gas price data is not always updated daily, which can introduce lag in analysis  
-- **GitHub Actions scheduling delays**: Workflow execution may not run exactly on schedule due to queueing or runtime delays  
-- **Power BI refresh limits**: Free-tier accounts have restrictions on refresh frequency, limiting near real-time updates  
-- **Data granularity differences**: Some datasets (e.g., gas vs electricity) may have different update frequencies and resolutions  
-- **Public data constraints**: Data availability and quality depend on external APIs  
+- **FRED API latency**: Natural gas data is not always updated daily  
+- **GitHub Actions delays**: Scheduled jobs may not run exactly on time  
+- **Power BI refresh limits**: Free-tier restricts refresh frequency  
+- **Data granularity differences** across sources  
+- **Dependence on external APIs** for data availability  
 
 ---
 
 ## Future Improvements 🚀
 
-- **Alternative data sources for natural gas** to reduce reliance on FRED API latency (e.g., more frequently updated market data providers)
-- **Forecasting models** for electricity prices and demand (e.g., time-series or machine learning approaches)  
-- **Grid congestion & constraint analysis** to identify transmission bottlenecks and their impact on price spikes       
-- **Advanced analytics** including volatility modeling, correlation analysis, and scenario testing  
-- **Alerting system** for significant market events (e.g., price spikes, demand surges)  
+- **Alternative data sources for natural gas** to reduce reliance on FRED API  
+- **Forecasting models** for electricity prices and demand  
+- **Grid congestion & constraint analysis** for price spike drivers  
+- **Advanced analytics** (volatility modeling, correlation analysis)  
+- **Alerting system** for market events  
 
 ---
 
