@@ -1,20 +1,27 @@
 # Alberta Energy Market Analytics Dashboard
 
-## Table of Contents
-1. [Project Overview](#project-overview)
-2. [Key Questions the Dashboard Answers](#key-questions-the-dashboard-answers)
-3. [Live Dashboard](#live-dashboard)
-4. [Data Pipeline and Methodology](#data-pipeline-and-methodology)
-5. [Tech Stack](#tech-stack)
-6. [Limitations](#limitations)
-7. [Future Improvements](#future-improvements)
-8. [Credits](#credits)
+An end-to-end data pipeline and visualization dashboard analyzing key drivers of Alberta’s electricity market, including power prices, demand, natural gas prices, and weather conditions.
+
+---
+
+## Dashboard Preview
+
+![Dashboard Preview](assets/dashboard_preview.png)
+
+---
+
+## Download Dashboard
+
+[Download Power BI File (.pbix)](https://github.com/a338wong/alberta_energy_market_analytics_dashboard/raw/main/reports/Alberta_Energy_Dashboard.pbix)
+
+*Requires Power BI Desktop to open.*
+
+---
 
 ## Project Overview
 
-This project is an end-to-end energy market analytics dashboard that tracks and visualizes key drivers of Alberta’s electricity market, including power prices, demand, natural gas prices, and weather conditions.
+This project tracks and analyzes how electricity prices respond to changes in key market drivers:
 
-The goal is to analyze how electricity prices respond to changes in:
 - Electricity demand  
 - Natural gas prices  
 - Weather conditions  
@@ -23,52 +30,53 @@ The system automates data collection, transformation, and reporting to simulate 
 
 The dashboard enables users to explore relationships between these variables to better understand energy price volatility and market conditions in Alberta.
 
-## Dashboard Preview
-
-## Download Dashboard
+---
 
 ## Key Questions the Dashboard Answers
 
-### 1. What drives electricity price volatility in Alberta?
+### What drives electricity price volatility in Alberta?
 - Analyze price spikes and volatility patterns  
 - Examine price distributions over time  
 
-### 2. When does electricity demand peak?
+### When does electricity demand peak?
 - Identify hourly demand trends  
 - Compare weekday vs weekend demand  
 - Analyze seasonal demand patterns  
 
-### 3. How does the weather influence energy demand?
+### How does weather influence energy demand?
 - Compare temperature vs electricity demand  
 - Evaluate seasonal weather effects  
 
-### 4. How are natural gas prices related to electricity prices?
+### How are natural gas prices related to electricity prices?
 - Analyze the correlation between gas and power prices  
 - Track gas price trends alongside electricity price movements  
 - Understand spark spread dynamics  
 
+---
 
 ## Data Pipeline and Methodology
 
-### 1. Data Collection
+### Data Collection
 - AESO → Alberta pool price and demand  
 - FRED API → Natural gas prices  
 - Weather API → Temperature and wind speed  
 
-### 2. Data Processing
+### Data Processing
 - Clean, align, and merge datasets into a unified time-series dataset  
 
-### 3. Feature Engineering
+### Feature Engineering
 - Spark spread calculation  
 - Time-based aggregations  
 - KPI metric construction  
 
-### 4. Automation
+### Automation
 - GitHub Actions schedules pipeline execution  
 - Processed dataset is updated automatically  
 
-### 5. Visualization
+### Visualization
 - Power BI dashboard with KPI cards and time-series analysis  
+
+---
 
 ## Tech Stack
 
@@ -78,13 +86,20 @@ The dashboard enables users to explore relationships between these variables to 
 - APIs (AESO, FRED, Weather)  
 - CSV-based data pipeline  
 
+---
+
 ## Limitations
 
-- FRED API latency: Natural gas data is not always updated daily  
-- GitHub Actions delays: Scheduled jobs may not run exactly on time  
-- Power BI refresh limits: Free-tier restricts refresh frequency  
-- Data granularity differences across sources  
+- Natural gas data from FRED is not always updated daily  
+- GitHub Actions scheduling may introduce slight delays  
+- Differences in data granularity across sources  
 - Dependence on external APIs for data availability  
+
+Power BI Deployment Constraint:  
+Due to restrictions associated with Power BI free-tier and school-managed accounts, the dashboard cannot be published publicly via Power BI Service.  
+To address this, the full `.pbix` file is provided above for local interaction and exploration.
+
+---
 
 ## Future Improvements
 
@@ -93,6 +108,8 @@ The dashboard enables users to explore relationships between these variables to 
 - Grid congestion and constraint analysis for price spike drivers  
 - Advanced analytics, including volatility modeling and correlation analysis  
 - Alerting system for significant market events  
+
+---
 
 ## Credits
 
