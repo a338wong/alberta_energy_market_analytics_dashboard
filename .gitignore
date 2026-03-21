@@ -39,3 +39,9 @@ data/processed/*.db
 # Logs
 # -----------------------------
 *.log
+
+# -----------------------------
+# Node / Playwright
+# -----------------------------
+node_modules/
+.playwright-profile/
