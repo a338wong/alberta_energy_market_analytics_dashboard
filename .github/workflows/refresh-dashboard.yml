@@ -36,6 +36,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install Playwright browsers
+        run: npx playwright install chromium
+
       - name: Run screenshot script
         run: node scripts/update_powerbi_screenshot.js
 
@@ -44,7 +47,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add assets/
+          git add assets/dashboard_preview.png
           git add README.md
 
           if ! git diff --cached --quiet; then
