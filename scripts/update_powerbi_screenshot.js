@@ -54,6 +54,7 @@ function commitAndPushScreenshot(filePath) {
       return;
     }
 
+    execSync('git pull --rebase origin main', { stdio: 'inherit' });
     execSync('git push origin main', { stdio: 'inherit' });
   } catch (error) {
     console.error('Git step failed.');
