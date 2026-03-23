@@ -1,0 +1,55 @@
+name: Refresh Power BI Screenshot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "40 13,15,17,19,22,0,2,5 * * *"
+
+concurrency:
+  group: refresh-dashboard
+  cancel-in-progress: true
+
+jobs:
+  update-screenshot:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Print trigger info
+        run: |
+          echo "event_name=${{ github.event_name }}"
+          echo "schedule=${{ github.event.schedule }}"
+          date -u
+
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run screenshot script
+        run: node scripts/update_powerbi_screenshot.js
+
+      - name: Commit updated screenshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add assets/
+          git add README.md
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Auto-update dashboard screenshot"
+            git push
+          else
+            echo "No changes to commit"
+          fi
