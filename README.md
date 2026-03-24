@@ -7,6 +7,9 @@ Automated hourly data pipeline with feature engineering (spark spread, demand tr
 ## Dashboard Preview 🖥️
 
 ![Dashboard Preview](assets/dashboard_preview.png)
+- Automatically refreshed based on latest available market data
+- Screenshot is programmatically updated and pushed to GitHub
+- Reflects near real-time Alberta power + gas market conditions
 
 ## Download Dashboard ⬇️
 
