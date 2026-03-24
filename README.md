@@ -14,7 +14,7 @@ This project includes a local automation system that continuously updates the da
 
 ### Workflow
 
-'''text
+```text
 Power BI Dataset Refresh
         ↓
 macOS Scheduler (launchd)
@@ -26,6 +26,7 @@ Screenshot Capture (dashboard_preview.png)
 Git Commit & Push
         ↓
 README Automatically Updates
+```
 
 ## Download Dashboard ⬇️
 
