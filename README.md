@@ -12,9 +12,7 @@ Automated hourly data pipeline with feature engineering (spark spread, demand tr
 
 This project includes a local automation system that continuously updates the dashboard preview in this repository.
 
-### Workflow
-
-```text
+```
 Power BI Dataset Refresh
         ↓
 macOS Scheduler (launchd)
