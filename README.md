@@ -7,9 +7,24 @@ Automated hourly data pipeline with feature engineering (spark spread, demand tr
 ## Dashboard Preview 🖥️
 
 ![Dashboard Preview](assets/dashboard_preview.png)
-- Automatically refreshed based on latest available market data
-- Screenshot is programmatically updated and pushed to GitHub
-- Reflects near real-time Alberta power + gas market conditions
+
+## Automated Dashboard Update Pipeline 🔄
+
+This project includes a local automation system that continuously updates the dashboard preview in this repository.
+
+### Workflow
+
+Power BI Dataset Refresh
+        ↓
+macOS Scheduler (launchd)
+        ↓
+Playwright Script (Headless Browser)
+        ↓
+Screenshot Capture (dashboard_preview.png)
+        ↓
+Git Commit & Push
+        ↓
+README Automatically Updates
 
 ## Download Dashboard ⬇️
 
