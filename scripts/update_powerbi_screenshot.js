@@ -74,12 +74,43 @@ async function main() {
   const page = context.pages()[0] || await context.newPage();
 
   console.log('Opening report...');
-  await page.goto(REPORT_URL, { waitUntil: 'domcontentloaded', timeout: 120000 });
 
-  console.log('Waiting for report to render...');
-  await page.waitForTimeout(10000);
+  await page.goto(REPORT_URL, {
+    waitUntil: 'domcontentloaded',
+    timeout: 120000
+  });
 
-  console.log('Taking clipped screenshot...');
+  console.log(`Current URL: ${page.url()}`);
+  console.log(`Page title: ${await page.title()}`);
+
+  console.log('Waiting for Power BI report to initialize...');
+
+  // Give Power BI time to load its application
+  await page.waitForTimeout(30000);
+
+  console.log('Waiting for page to become stable...');
+
+  try {
+    await page.waitForLoadState('networkidle', {
+      timeout: 30000
+    });
+  } catch {
+    console.log('Network did not become idle — continuing.');
+  }
+
+  // Extra time for Power BI visuals to render
+  await page.waitForTimeout(15000);
+
+  console.log('Current URL before screenshot:', page.url());
+
+  // Save a full-page debug screenshot first
+  await page.screenshot({
+    path: path.join(process.cwd(), 'assets', 'debug_full_page.png'),
+    fullPage: true
+  });
+
+  console.log('Taking dashboard screenshot...');
+
   await page.screenshot({
     path: OUTPUT_PATH,
     clip: CLIP
