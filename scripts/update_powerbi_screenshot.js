@@ -103,12 +103,6 @@ async function main() {
 
   console.log('Current URL before screenshot:', page.url());
 
-  // Save a full-page debug screenshot first
-  await page.screenshot({
-    path: path.join(process.cwd(), 'assets', 'debug_full_page.png'),
-    fullPage: true
-  });
-
   console.log('Taking dashboard screenshot...');
 
   await page.screenshot({
